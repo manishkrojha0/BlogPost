@@ -1,0 +1,28 @@
+{% if course.pk is 1 %}
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Python-logo-notext.svg/200px-Python-logo-notext.svg.png">
+<h1><a href="https://python-course.eu/">{{course.coursename}}</a></h1>
+<h2>{{course.insname}}</h2>
+<ul>
+    {% for x in AllCourses.set.all %}
+    <li>{{ x.ct }}</li>
+    {% endfor %}
+</ul>
+{% elif course.pk is 2 %}
+<h1><a href="https://python-course.eu/">{{course.coursename}}</a></h1>
+<h2>{{course.insname}}</h2>
+{% else %}
+<h1>{{course.coursename}}</h1>
+<h2>{{course.insname}}</h2>
+{% endif %}
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>
+{% endif %}
+
+<form action="{% url 'TechnicalCourses:yourchoice' course.id %}" method="post">
+    {% csrf_token %}
+    {% for choice in course.details_set.all %}
+    <input type="radio" name="choice" id="choice{{ forloop.counter}}" value="{choice.id}">
+    <label for="choice{{ forloop.counter}}">{{choice.ct}}</label><br>
+    {% endfor %}
+    <input type="submit" value="Submit">
+</form>
