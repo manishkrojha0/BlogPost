@@ -22,6 +22,5 @@ COLOR_CHOICES = (
 
 class Newform(forms.Form):
     order_type = forms.CharField(
-        max_length=15,
         widget=forms.Select(choices=COLOR_CHOICES),
     )
