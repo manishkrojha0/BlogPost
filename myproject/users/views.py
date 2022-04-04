@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .forms import UserRegisterForm
+from django.views import View
+
+from .forms import UserRegisterForm, Newform
 
 
 def register(request):
@@ -14,3 +16,24 @@ def register(request):
     else:
         form = UserRegisterForm()
     return render(request, 'users/register.html', {'form': form})
+
+class newForm(View):
+
+    def __init__(self):
+
+        super(newForm,self).__init__()
+
+    def get(self,request):
+
+        form = Newform()
+        payload = {"form":form}
+
+        return render(request,"users/newForm.html",payload)
+
+    def post(self,request):
+
+        order_type=request.POST.get('order_type')
+        messages.success(request, f'Order created for {order_type}!')
+        return redirect('blog-home')
+
+
